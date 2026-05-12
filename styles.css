@@ -1,37 +1,41 @@
-/* ====== 基本重置 ====== */
-* { box-sizing: border-box; }
-html, body {
+/* ====== 基本 ====== */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 100%;
+  min-height: 100%;
+  background: #000;
 
-  /* ✅ iOS inset 區會用 page background 填色，設黑避免白邊/灰邊 */
-  background: #000; /* [2](https://github.com/lahcen001/Ramz/blob/main/PWA_GUIDE.md) */
+  /* 防止 iOS bounce 出白邊 */
+  overscroll-behavior: none;
 }
 
-/* ====== iOS 動態高度保護（避免 100vh 露底） ====== */
-html { height: -webkit-fill-available; }
+/* ====== iPhone PWA 高度修正 ====== */
 body {
+  min-height: 100vh;
   min-height: 100dvh;
-  min-height: -webkit-fill-available;
   overflow: hidden;
 }
 
-/* ====== safe-area 變數（依照 env() 規格） ====== */
-:root{
-  --sab: env(safe-area-inset-bottom, 0px); /* [4](https://raw.githubusercontent.com/Microsoft/W32Time/master/Precision%20Time%20Protocol/docs/Validation%20Guide%20-%20Precision%20Time%20Protocol.docx)[3](https://github.com/alkhaledsumer/test/blob/main/index.html) */
-}
-
-/* ====== 全屏背景層：關鍵！fixed + inset:0 ====== */
+/* ====== 全屏背景 ====== */
 #bg {
   position: fixed;
-  inset: 0;
+
+  top: 0;
+  left: 0;
+  right: 0;
+
+  /* 關鍵：覆蓋 iPhone 底部 safe area */
+  bottom: calc(-1 * env(safe-area-inset-bottom, 0px));
+
   z-index: 0;
 
   background-color: #000;
-
-  /* ✅ 改成你 assets/bg 實際檔名 */
   background-image: url("./assets/bg/bg1.jpg");
   background-size: cover;
   background-position: center;
@@ -40,27 +44,38 @@ body {
   transform: translateZ(0);
 }
 
-/* ====== 內容層：同樣鋪滿 ====== */
+/* ====== App內容 ====== */
 #app {
   position: fixed;
   inset: 0;
+
   z-index: 1;
 
   color: #fff;
+
   padding: 16px;
+
+  /* 避免內容被 Home Indicator 擋住 */
+  padding-bottom: calc(
+    16px + env(safe-area-inset-bottom, 0px)
+  );
 }
 
-/* ====== 版本號：固定最底，但避開 Home Indicator ====== */
+/* ====== Version ====== */
 #version {
   position: fixed;
+
   left: 0;
   right: 0;
 
-  bottom: calc(6px + var(--sab)); /* [4](https://raw.githubusercontent.com/Microsoft/W32Time/master/Precision%20Time%20Protocol/docs/Validation%20Guide%20-%20Precision%20Time%20Protocol.docx)[3](https://github.com/alkhaledsumer/test/blob/main/index.html) */
+  bottom: max(6px, env(safe-area-inset-bottom, 0px));
 
   text-align: center;
+
   font-size: 12px;
-  color: rgba(255,255,255,0.85);
+
+  color: rgba(255, 255, 255, 0.85);
+
   z-index: 10;
 
   pointer-events: none;
