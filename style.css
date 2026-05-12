@@ -1,0 +1,63 @@
+/* 1) 清掉任何預設留白 */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #000; }
+
+/* 2) iOS 高度問題處理：用 dvh + fill-available */
+html { height: -webkit-fill-available; }
+body {
+  min-height: 100dvh;
+  min-height: -webkit-fill-available;
+  overflow: hidden; /* 避免露底/彈跳 */
+}
+
+/* 3) 背景層：固定鋪滿整個視窗（含瀏海區） */
+#bg {
+  position: fixed;
+  inset: 0;
+  background-color: #000;
+  background-image: url("assets/bg/bg1.jpg"); /* 預設背景 */
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  transform: translateZ(0); /* iOS 渲染穩定 */
+  z-index: 0;
+}
+
+/* 4) 內容層：同樣鋪滿，避免出現底部黑/灰條 */
+#app {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+
+  /* 不用 safe-area padding => 你要的「無 safe area」視覺 */
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+/* 可選：半透明內容區 */
+.overlay {
+  margin: 16px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(0,0,0,0.35);
+  color: #fff;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  max-width: 520px;
+}
+
+/* 5) 版本號：你要的 very very bottom */
+#version {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 6px;              /* 真的貼底 */
+  text-align: center;
+  font-size: 12px;
+  color: rgba(255,255,255,0.8);
+  letter-spacing: 0.5px;
+  user-select: none;
+  pointer-events: none;
+}

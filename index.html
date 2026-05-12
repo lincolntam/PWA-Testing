@@ -1,52 +1,68 @@
 <!doctype html>
-<html lang="zh-HK">
+<html lang="zh-Hant">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
-  <title>Route - LTravelLog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#000000" />
 
-  <!-- PWA -->
-  <link rel="manifest" href="manifest.json?v=0.55.0">
-  <meta name="theme-color" content="#000000">
-  <link rel="apple-touch-icon" href="icons/icon-192x192.png">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="LTravelLog">
+  <!-- iOS PWA -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="My PWA" />
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
 
-  <link rel="stylesheet" href="route.css?v=0.55.0" />
+  <!-- Manifest -->
+  <link rel="manifest" href="manifest.json" />
+
+  <link rel="stylesheet" href="styles.css" />
+  <title>My PWA</title>
 </head>
 
 <body>
-  <!-- Fullscreen map (底層) -->
-  <div id="map" aria-label="Google Map"></div>
+  <!-- 全螢幕背景層（鋪到瀏海/圓角） -->
+  <div id="bg"></div>
 
-  <!-- Optional: overlay UI（先放一個最簡單頂bar，你日後可以加 bottom sheet） -->
-  <header class="top-bar" role="banner">
-    <div class="brand">
-      <span class="dot"></span>
-      <span class="title">LTravelLog</span>
+  <!-- 內容層（如果你要放 map / UI，都放這裡） -->
+  <main id="app">
+    <div class="overlay">
+      <h1>全螢幕 PWA</h1>
+      <p>背景會鋪滿整個螢幕（含 iOS 瀏海區）。</p>
     </div>
 
-    <div class="actions">
-      <button class="btn" id="locBtn" type="button" aria-label="回到目前位置">定位</button>
-      <button class="btn primary" id="planBtn" type="button" aria-label="開始規劃">規劃</button>
-    </div>
-  </header>
+    <!-- 版本號：你要的「very very bottom」 -->
+    <div id="version">v1</div>
+  </main>
 
-  <!-- Google Maps JS (建議 async + defer) -->
   <script>
-    // 🔑 方式 A：你可以直接寫 key 喺呢度
-    window.__GMAPS_KEY__ = "YOUR_API_KEY";
-  </script>
+    // ✅ 如果你想做「資料夾多張背景輪播」
+    // 把 assets/bg 裡的檔名填進來（瀏覽器無法直接讀取資料夾列表）
+    const backgrounds = [
+      "assets/bg/bg1.jpg",
+      // "assets/bg/bg2.jpg",
+      // "assets/bg/bg3.jpg",
+    ];
 
-  <script src="route.js?v=0.55.0"></script>
+    const bgEl = document.getElementById("bg");
+    let idx = 0;
 
-  <!-- Google Maps Loader（用 callback，確保載入後初始化） -->
-  <script
-    async
-    defer
-    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initMap">
+    function setBg(i) {
+      bgEl.style.backgroundImage = `url("${backgrounds[i]}")`;
+    }
+
+    setBg(idx);
+
+    // 可選：每 10 秒換一張
+    // setInterval(() => {
+    //   idx = (idx + 1) % backgrounds.length;
+    //   setBg(idx);
+    // }, 10000);
+
+    // ✅ 註冊 Service Worker
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js");
+      });
+    }
   </script>
 </body>
 </html>
