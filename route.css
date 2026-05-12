@@ -1,0 +1,99 @@
+:root {
+  --app-height: 100dvh;
+  --safe-top: env(safe-area-inset-top);
+  --safe-bottom: env(safe-area-inset-bottom);
+  --ui-bg: rgba(20, 20, 22, 0.42);
+  --ui-line: rgba(255, 255, 255, 0.18);
+  --ui-text: rgba(255, 255, 255, 0.92);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  background: #000;
+  overflow: hidden; /* 避免 body 拉扯露底 */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* ✅ Map 永遠 full screen */
+#map {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: var(--app-height); /* 用 app-height 取代 100vh */
+  background: #000; /* 地圖未載入時都唔會灰 */
+}
+
+/* ---------- Minimal overlay UI ---------- */
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+
+  padding: calc(10px + var(--safe-top)) 12px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  pointer-events: none; /* 讓地圖可拖曳 */
+}
+
+.top-bar > * { pointer-events: auto; }
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--ui-line);
+  border-radius: 16px;
+  background: var(--ui-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: var(--ui-text);
+}
+
+.brand .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #d98a95;
+  box-shadow: 0 0 0 6px rgba(217,138,149,0.18);
+}
+
+.brand .title {
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+}
+
+.actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn {
+  border: 1px solid var(--ui-line);
+  background: var(--ui-bg);
+  color: var(--ui-text);
+  border-radius: 14px;
+  padding: 10px 12px;
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.btn.primary {
+  background: linear-gradient(180deg, #d98a95, #b86972);
+  border-color: rgba(255,255,255,0.12);
+}
+
+/* 小屏微調 */
+@media (max-width: 380px) {
+  .brand .title { display: none; }
+}

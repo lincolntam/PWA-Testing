@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-HK">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <title>Route - LTravelLog</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json?v=0.55.0">
+  <meta name="theme-color" content="#000000">
+  <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="LTravelLog">
+
+  <link rel="stylesheet" href="route.css?v=0.55.0" />
+</head>
+
+<body>
+  <!-- Fullscreen map (底層) -->
+  <div id="map" aria-label="Google Map"></div>
+
+  <!-- Optional: overlay UI（先放一個最簡單頂bar，你日後可以加 bottom sheet） -->
+  <header class="top-bar" role="banner">
+    <div class="brand">
+      <span class="dot"></span>
+      <span class="title">LTravelLog</span>
+    </div>
+
+    <div class="actions">
+      <button class="btn" id="locBtn" type="button" aria-label="回到目前位置">定位</button>
+      <button class="btn primary" id="planBtn" type="button" aria-label="開始規劃">規劃</button>
+    </div>
+  </header>
+
+  <!-- Google Maps JS (建議 async + defer) -->
+  <script>
+    // 🔑 方式 A：你可以直接寫 key 喺呢度
+    window.__GMAPS_KEY__ = "YOUR_API_KEY";
+  </script>
+
+  <script src="route.js?v=0.55.0"></script>
+
+  <!-- Google Maps Loader（用 callback，確保載入後初始化） -->
+  <script
+    async
+    defer
+    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initMap">
+  </script>
+</body>
+</html>
