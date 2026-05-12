@@ -97,3 +97,35 @@ html, body {
 @media (max-width: 380px) {
   .brand .title { display: none; }
 }
+
+/* ✅ iOS：用 svh/dvh 確保滿屏（避免底部露黑） */
+.phone-shell{
+  width: 100vw;
+  height: 100vh;     /* fallback */
+  height: 100svh;    /* iOS/Android stable viewport */
+  height: 100dvh;    /* modern dynamic viewport */
+  min-height: 0;     /* 避免你原本 min-height 影響手機 */
+}
+
+/* ✅ Map 必須有明確尺寸，否則 Google Map 可能會「消失/白屏」 */
+#map{
+  position: absolute;
+  inset: 0 !important;  /* ✅ 唔好用負 safe-area inset 去推大 map */
+  width: 100%;
+  height: 100%;
+}
+
+/* ✅ fade layer 同步滿屏 */
+.map-fade{
+  inset: 0 !important;
+  width: 100%;
+  height: 100%;
+}
+
+/* ✅ Safe-area 應該由 UI 食，而唔係 map */
+.bottom-sheet{
+  bottom: calc(18px + env(safe-area-inset-bottom));
+}
+.top-bar{
+  padding-top: calc(16px + env(safe-area-inset-top));
+}
