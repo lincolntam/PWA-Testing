@@ -1,91 +1,16 @@
-* {
-  box-sizing: border-box;
+/* 1. 強制鎖定螢幕，不允許捲動 */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden; /* 關鍵：禁止全局捲動 */
 }
 
-html,
+/* 2. 背景圖設定 */
 body {
-  margin: 0;
-  width: 100%;
-  height: 100%;
-
-  /* 關鍵 */
-  background: #1a1414;
-
-  overflow: hidden;
-}
-
-body {
-  position: fixed;
-  inset: 0;
-}
-
-/* Fullscreen image */
-#bg {
-  position: fixed;
-  inset: 0;
-
-  background-image: url("./assets/bg/bg1.jpg");
-
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-
-  padding-bottom: calc(80px + env(safe-area-inset-bottom,0px)
-
-  z-index: 0;
-}
-
-/* Overlay UI */
-#app {
-  position: fixed;
-  inset: 0;
-
-  z-index: 10;
-
-  color: white;
-
-  padding-top: 48px;
-  padding-left: 24px;
-  padding-right: 24px;
-
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    sans-serif;
-}
-
-h1 {
-  margin: 0;
-  font-size: 56px;
-  font-weight: 700;
-}
-
-p {
-  margin-top: 32px;
-
-  font-size: 22px;
-
-  line-height: 1.5;
-
-  color: rgba(255,255,255,0.85);
-}
-
-/* Bottom floating text */
-#version {
-  position: fixed;
-
-  left: 0;
-  right: 0;
-
-  bottom: calc(env(safe-area-inset-bottom));
-
-  text-align: center;
-
-  color: white;
-
-  font-size: 20px;
-
-  z-index: 30;
+    background: url('https://i.pinimg.com/736x/b4/2e/50/b42e50d88af51df3efeccd8e105d6e55.jpg') no-repeat center center fixed;
+    background-size: cover;
 }
 
 /* 3. 主容器佔滿全螢幕 (100% 可視高度) */
@@ -95,6 +20,16 @@ p {
     height: 100vh; /* 使用 100% 視窗高度 */
     height: -webkit-fill-available; /* 修正行動裝置瀏覽器工具欄遮擋問題 */
     width: 100vw;
+}
+
+/* 4. 如果內容太多，只讓中間區域內部捲動，外部不變 */
+.content {
+    flex: 1;
+    overflow-y: auto; /* 只有這裡可以捲動，像聊天視窗一樣 */
+    padding: 20px;
+    /* 這裡處理左右的安全區域 */
+    padding-left: calc(20px + env(safe-area-inset-left));
+    padding-right: calc(20px + env(safe-area-inset-right));
 }
 
 /* 5. 頂部與底部依然保持 Safe Area */
