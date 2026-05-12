@@ -1,6 +1,6 @@
 const CACHE = "ltravellog-v0.55.0";
 const ASSETS = [
-  "./route.html",
+  "./index.html",
   "./route.css",
   "./route.js",
   "./manifest.json",
