@@ -75,7 +75,7 @@ p {
   left: 0;
   right: 0;
 
-  bottom: calc(env(safe-area-inset-bottom) + 8px);
+  bottom: calc(env(safe-area-inset-bottom));
 
   text-align: center;
 
