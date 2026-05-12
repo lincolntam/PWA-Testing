@@ -2,12 +2,14 @@
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; background: #000; }
 
-/* 2) iOS 高度問題處理：用 dvh + fill-available */
+/* 1) iOS 高度：避免 100vh 出事 */
 html { height: -webkit-fill-available; }
 body {
   min-height: 100dvh;
   min-height: -webkit-fill-available;
-  overflow: hidden; /* 避免露底/彈跳 */
+  overflow: hidden;                 /* 避免可捲動露底 */
+  overscroll-behavior: none;        /* Android/部分瀏覽器防彈跳露底 */
+  -webkit-overflow-scrolling: auto; /* iOS */
 }
 
 /* 3) 背景層：固定鋪滿整個視窗（含瀏海區） */
@@ -17,6 +19,8 @@ body {
   background-color: #000;
   background-image: url("assets/bg/bg1.jpg"); /* 預設背景 */
   background-size: cover;
+  width: 100%;
+  height: 100%;
   background-position: center center;
   background-repeat: no-repeat;
   transform: translateZ(0); /* iOS 渲染穩定 */
@@ -60,39 +64,5 @@ body {
   letter-spacing: 0.5px;
   user-select: none;
   pointer-events: none;
-}
-
-
-/* 0) 先確保根節點真・全屏 */
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  background: #000; /* 就算有縫都唔會白，但我們要做到無縫 */
-}
-
-/* 1) iOS 高度：避免 100vh 出事 */
-html { height: -webkit-fill-available; }
-body {
-  min-height: 100dvh;
-  min-height: -webkit-fill-available;
-  overflow: hidden;                 /* 避免可捲動露底 */
-  overscroll-behavior: none;        /* Android/部分瀏覽器防彈跳露底 */
-  -webkit-overflow-scrolling: auto; /* iOS */
-}
-
-/* 2) 你真正要「全屏覆蓋」的容器，必須 fixed + inset:0 */
-#app, #map, .map, .map-container {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-/* 3) 如果你用 iframe / canvas / google map div，一樣要 100% */
-#map iframe, #map canvas, #map > div {
-  width: 100% !important;
-  height: 100% !important;
 }
 
