@@ -1,12 +1,14 @@
-const CACHE_NAME = "mypwa-v1";
+const CACHE_NAME = "pwa-testing-v2";
 const ASSETS = [
   "./",
   "./index.html",
   "./styles.css",
+  "./route.css",
+  "./route.js",
   "./manifest.json",
-  "./assets/bg/bg1.jpg",
-  "./assets/icons/icon-192.png",
-  "./assets/icons/icon-512.png"
+  "./bg1.jpg",
+  "./icons/icon-192.png",
+  "./icons/icon-512.png"
 ];
 
 self.addEventListener("install", (event) => {
