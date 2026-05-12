@@ -88,9 +88,11 @@ p {
   z-index: 30;
 }
 
-.container {
-  padding-top: env(safe-area-inset-top);      /* 頂部安全距離 */
-  padding-bottom: env(safe-area-inset-bottom);/* 底部安全距離 */
-  padding-left: env(safe-area-inset-left);    /* 左側安全距離 */
-  padding-right: env(safe-area-inset-right);  /* 右側安全距離 */
+/* 3. 主容器佔滿全螢幕 (100% 可視高度) */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* 使用 100% 視窗高度 */
+    height: -webkit-fill-available; /* 修正行動裝置瀏覽器工具欄遮擋問題 */
+    width: 100vw;
 }
