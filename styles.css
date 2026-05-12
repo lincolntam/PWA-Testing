@@ -21,7 +21,7 @@ body {
 
 /* Fullscreen image */
 #bg {
-  position: fixed;
+  position: relative;
   inset: 0;
 
   background-image: url("./assets/bg/bg1.jpg");
