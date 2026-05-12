@@ -8,61 +8,45 @@
   <!-- iOS PWA -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="My PWA" />
-  <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
+  <meta name="apple-mobile-web-app-title" content="PWA Testing" />
 
-  <!-- Manifest -->
-  <link rel="manifest" href="manifest.json" />
+  <title>PWA Testing</title>
 
-  <link rel="stylesheet" href="styles.css" />
-  <title>My PWA</title>
-</head>
+  <!-- CSS -->
+  <link rel="stylesheet" href="./route.css?v=1" />
 
-<body>
-  <!-- 全螢幕背景層（鋪到瀏海/圓角） -->
-  <div id="bg"></div>
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="./manifest.json?v=1" />
 
-  <!-- 內容層（如果你要放 map / UI，都放這裡） -->
-  <main id="app">
-    <div class="overlay">
-      <h1>全螢幕 PWA</h1>
-      <p>背景會鋪滿整個螢幕（含 iOS 瀏海區）。</p>
-    </div>
+  <!-- Optional: iOS icons (如你 repo 有放 icon 檔就改路徑/檔名) -->
+  <!-- <link rel="apple-touch-icon" href="./assets/icons/icon-192.png圖層：你 route.js/Google Map/Leaflet 都可以掛喺呢個 div -->
+  <div id="map" role="application" aria-label="Map"></div>
 
-    <!-- 版本號：你要的「very very bottom」 -->
-    <div id="version">v1</div>
-  </main>
+  <!-- 版本號：固定最底，不影響地圖高度 -->
+  <div id="version">v1</div>
 
   <script>
-    // ✅ 如果你想做「資料夾多張背景輪播」
-    // 把 assets/bg 裡的檔名填進來（瀏覽器無法直接讀取資料夾列表）
-    const backgrounds = [
-      "assets/bg/bg1.jpg",
-      "assets/bg/bg2.jpg",
-      // "assets/bg/bg3.jpg",
-    ];
+    /**
+     * ✅ 背景圖設定：
+     * 1) 請把背景圖 upload 到 repo，例如：/assets/bg/bg1.jpg
+     * 2) 下面保持不變就會生效
+     *
+     * 重要：GitHub Pages 無法讀本機 C:\ 路徑，必須用 repo 相對路徑。 
+     */
+    const BG_URL = "./assets/bg/bg1.jpg"; // ← 改呢行去你實際背景圖路徑/檔名
 
-    const bgEl = document.getElementById("bg");
-    let idx = 0;
+    const bg = document.getElementById("bg");
+    bg.style.backgroundImage = `url('${BG_URL}')`;
 
-    function setBg(i) {
-      bgEl.style.backgroundImage = `url("${backgrounds[i]}")`;
-    }
-
-    setBg(idx);
-
-    // 可選：每 10 秒換一張
-    // setInterval(() => {
-    //   idx = (idx + 1) % backgrounds.length;
-    //   setBg(idx);
-    // }, 10000);
-
-    // ✅ 註冊 Service Worker
+    // ✅ 註冊 Service Worker（你 repo 有 sw.js）
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js");
+        navigator.serviceWorker.register("./sw.js").catch(() => {});
       });
     }
   </script>
+
+  <!-- 你 repo 有 route.js：保留載入（如你用佢初始化 map） -->
+  <script src="./route.js?v=1" defer></script>
 </body>
 </html>
