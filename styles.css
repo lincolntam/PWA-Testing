@@ -87,3 +87,10 @@ p {
 
   z-index: 30;
 }
+
+.container {
+  padding-top: env(safe-area-inset-top);      /* 頂部安全距離 */
+  padding-bottom: env(safe-area-inset-bottom);/* 底部安全距離 */
+  padding-left: env(safe-area-inset-left);    /* 左側安全距離 */
+  padding-right: env(safe-area-inset-right);  /* 右側安全距離 */
+}
