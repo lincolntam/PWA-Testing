@@ -96,3 +96,16 @@ p {
     height: -webkit-fill-available; /* 修正行動裝置瀏覽器工具欄遮擋問題 */
     width: 100vw;
 }
+
+/* 5. 頂部與底部依然保持 Safe Area */
+.safe-header {
+    padding-top: env(safe-area-inset-top);
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.safe-footer {
+    padding-bottom: env(safe-area-inset-bottom);
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+}
